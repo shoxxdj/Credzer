@@ -1,0 +1,15 @@
+[[package]]
+name = "tinydb"
+version = "4.7.0"
+description = "TinyDB is a tiny, document oriented database optimized for your happiness :)"
+category = "main"
+optional = false
+python-versions = ">=3.6,<4.0"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.10"
+content-hash = "7d51e54e5e0e1f06a64dc64a4a2f0386db1df16d7cbe424b7a21214b2629cd22"
+
+[metadata.files]
+tinydb = []
