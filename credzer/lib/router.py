@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query
-from credzer.lib.parser import cme, msf, ntds, ntlmv2, hashcat_ntlm_potfile, hashcat_ntlmv2_potfile
+from credzer.lib.parser import cme, msf, ntlm, ntlmv2, hashcat_ntlm_potfile, hashcat_ntlmv2_potfile
 from credzer.lib.display import display
 
 def router(args):
@@ -14,8 +14,8 @@ def router(args):
         #Source Args
         if(source=='cme'):
             cme()
-        if(source=='ntds'):
-            ntds(args.database,args.file)
+        if(source=='ntlm'):
+            ntlm(args.database,args.file)
         if(source=='hashcat_ntlm'):
             hashcat_ntlm_potfile(args.database,args.file)
         if(source=='hashcat_ntlmv2'):

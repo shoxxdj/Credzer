@@ -7,7 +7,7 @@ def cme():
     pass
 def msf():
     pass
-def ntds(db,file):
+def ntlm(db,file):
     db = TinyDB(db)
     NewEntriesCount=0
     with open(file) as f:
@@ -24,11 +24,10 @@ def ntds(db,file):
             lm_hash=splited[2].lower()
             nt_hash=splited[3].lower()
             Entry = Query()
-            if(db.search(Entry.username==username) or db.search(Entry.nt_hash==nt_hash)):
+            if((db.search(Entry.username==username) and db.search(Entry.domain==domain)) or db.search(Entry.nt_hash==nt_hash)):
                 pass
             else:
                 datas = Datamodel(domain,username,full_username,lm_hash,nt_hash,"","")
-                print(datas.insertObject())
                 db.insert(datas.insertObject())
                 NewEntriesCount+=1
         print("Add %s new entries" %(NewEntriesCount))
@@ -69,9 +68,8 @@ def ntlmv2(db,file):
             ntlmv2= ntlmv2.strip().lower()
             Entry = Query()
             if(db.search(Entry.ntlmv2==ntlmv2) and db.search(Entry.clear_password=="")):
-                print("Exist")
+                pass
             else:
-                print('no exist')
                 datas = Datamodel(domain,username,full_username,"","",ntlmv2,"")
                 db.upsert(datas.insertObject(),Entry.username==username)
                 NewEntriesCount+=1
