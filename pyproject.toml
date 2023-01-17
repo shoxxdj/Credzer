@@ -2,7 +2,7 @@
 name = "credzer"
 version = "0.1.0"
 description = "One to rule them all"
-authors = ["shoxxdj <remi.martin-de-abia@advens.fr>"]
+authors = ["shoxxdj <shoxx@shoxxdj.fr>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -5,7 +5,15 @@ Usefull to agregate datas from NTDS dump, hashcat results, responder captures ..
 
 ## Setup 
 
-``` poetry install ```
+``
+poetry install
+```
+or
+```
+pip install credzer
+```
+
+
 
 ## Usage 
 
