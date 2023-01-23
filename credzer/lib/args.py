@@ -12,6 +12,7 @@ def args_parser():
     parser.add_argument('--source','-s',nargs=1,choices=supported)
     parser.add_argument('--file','-f',action="store",help="File containing creds to be add to the database")
     parser.add_argument('--search',action="store",help="Search content in the database")
+    parser.add_argument('--stats',action="store_true",help="Display cool stats")
     #parser.add_argument('-a',)
 
     try:

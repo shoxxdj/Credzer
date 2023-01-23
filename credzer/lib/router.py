@@ -1,6 +1,6 @@
 from tinydb import TinyDB, Query
 from credzer.lib.parser import cme, msf, ntlm, ntlmv2, hashcat_ntlm_potfile, hashcat_ntlmv2_potfile
-from credzer.lib.display import display
+from credzer.lib.display import display,displayStats
 
 def router(args):
     source=""
@@ -26,4 +26,7 @@ def router(args):
     #Search Args
     if(args.search=='cleartext'):
         display(args.database,'cleartext')
+
+    if(args.stats):
+        displayStats(args.database)
         
