@@ -1,9 +1,54 @@
+import sqlite3
 from tinydb import TinyDB, Query
 from credzer.lib.model import Datamodel
 
+
 MAGIC_HASH="31d6cfe0d16ae931b73c59d7e0c089c0"
 
-def cme():
+def cme(db,cmedbfile):
+    db = TinyDB(db)
+    NewEntriesCount=0
+    UpdateEntries=0
+    con = sqlite3.connect(cmedbfile)
+    cur = con.cursor()
+    res = cur.execute("SELECT domain as domain,username,password,credtype FROM users")
+    for result in res.fetchall():
+        domain=result[0]
+        username=result[1]
+        nt_hash=''
+        lm_hash=''
+        clear_password=''
+        if(result[3]=='hash'):
+            if(':' in result[2]):
+                lm_hash=result[2].split(':')[0]
+                nt_hash=result[2].split(':')[1]
+            else:
+                lm_hash=MAGIC_HASH
+                nt_hash=result[2]
+        if(result[3]=='plaintext'):
+            clear_password=result[2]
+
+        Entry = Query()
+
+        if(clear_password!=''):
+            usersConcern=db.search(Entry.username==username)
+            for userConcern in usersConcern:
+                if(userConcern['clear_password']==''):
+                    datas = Datamodel(userConcern['domain'],userConcern['username'],userConcern['full_username'],userConcern['lm_hash'],userConcern['nt_hash'],userConcern['ntlmv2'],clear_password)
+                    db.upsert(datas.insertObject(),Entry.username==username)
+                    UpdateEntries+=1
+        elif(nt_hash!=''):
+            usersConcern=db.search(Entry.username==username)
+            for userConcern in usersConcern:
+                if(userConcern['clear_password']==''):
+                    datas = Datamodel(userConcern['domain'],userConcern['username'],userConcern['full_username'],lm_hash,nt_hash,userConcern['ntlmv2'],userConcern['clear_password'])
+                    db.upsert(datas.insertObject(),Entry.username==username)
+                    UpdateEntries+=1
+        else:
+            #Users may not exist already in db
+            datas = Datamodel(domain,username,domain+"\\"+username,lm_hash,nt_hash,"",clear_password)
+            db.insert(datas.insertObject())
+            NewEntriesCount+=1
     pass
 def msf():
     pass

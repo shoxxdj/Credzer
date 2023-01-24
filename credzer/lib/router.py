@@ -13,7 +13,7 @@ def router(args):
     else:
         #Source Args
         if(source=='cme'):
-            cme()
+            cme(args.database,args.file)
         if(source=='ntlm'):
             ntlm(args.database,args.file)
         if(source=='hashcat_ntlm'):
